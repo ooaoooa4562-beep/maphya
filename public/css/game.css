@@ -1,0 +1,5 @@
+header { display: flex; justify-content: space-between; font-size: 20px; font-weight: bold; margin-bottom: 20px; }
+#players-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.player-card { background: #333; padding: 15px; border-radius: 8px; text-align: center; border: 2px solid transparent; }
+.player-card.dead { opacity: 0.5; background: #222; text-decoration: line-through; }
+.player-card.selected { border-color: #e74c3c; }
