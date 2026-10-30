@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мафия Online</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/auth.css">
+    <link rel="stylesheet" href="/css/game.css">
+</head>
+<body>
+
+    <!-- Экран 1: Авторизация и Лобби -->
+    <div id="screen-lobby" class="screen active">
+        <h1>Мафия Online</h1>
+        <div class="input-group">
+            <input type="text" id="playerName" placeholder="Твое имя">
+        </div>
+        
+        <div id="lobby-actions">
+            <button id="btn-create-room" class="btn primary">Создать комнату</button>
+            <div class="join-group">
+                <input type="text" id="roomCode" placeholder="Код комнаты (например A1B2)">
+                <button id="btn-join-room" class="btn secondary">Войти</button>
+            </div>
+        </div>
+
+        <div id="waiting-room" class="hidden">
+            <h2>Комната: <span id="display-room-code"></span></h2>
+            <ul id="players-list"></ul>
+            <button id="btn-start-game" class="btn primary hidden">Начать игру (Хост)</button>
+        </div>
+    </div>
+
+    <!-- Экран 2: Сама игра -->
+    <div id="screen-game" class="screen hidden">
+        <header>
+            <span id="game-phase">Ночь</span>
+            <span id="game-timer">00:30</span>
+        </header>
+        
+        <div id="game-board">
+            <!-- Сюда JS будет выводить игроков -->
+            <div id="players-grid"></div>
+        </div>
+
+        <div id="action-panel">
+            <!-- Кнопки действий (выбрать жертву, проголосовать) -->
+            <p id="action-hint">Выберите, кого убить</p>
+        </div>
+    </div>
+
+    <!-- Подключение скриптов -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/socket.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/lobby.js"></script>
+    <script src="/js/game.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>
