@@ -2,60 +2,99 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мафия Online</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#121212">
+    <title>🕵️‍♂️ Мафия Online</title>
+    
+    <!-- Подключение стилей -->
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/auth.css">
     <link rel="stylesheet" href="/css/game.css">
+    <link rel="stylesheet" href="/css/components.css">
 </head>
 <body>
 
-    <!-- Экран 1: Авторизация и Лобби -->
+    <!-- ========================================== -->
+    <!-- ЭКРАН 1: ЛОББИ (Создание / Вход)           -->
+    <!-- ========================================== -->
     <div id="screen-lobby" class="screen active">
-        <h1>Мафия Online</h1>
-        <div class="input-group">
-            <input type="text" id="playerName" placeholder="Твое имя">
+        <div class="logo">
+            <h1>🕵️‍♂️ МАФИЯ</h1>
+            <p>Онлайн-версия классической игры</p>
         </div>
         
-        <div id="lobby-actions">
-            <button id="btn-create-room" class="btn primary">Создать комнату</button>
-            <div class="join-group">
-                <input type="text" id="roomCode" placeholder="Код комнаты (например A1B2)">
-                <button id="btn-join-room" class="btn secondary">Войти</button>
+        <div class="card auth-card">
+            <!-- Поле ввода имени -->
+            <input type="text" id="playerName" placeholder="Ваше имя" maxlength="12" autocomplete="off">
+            
+            <!-- Блок действий (Создать / Войти) -->
+            <div id="lobby-actions">
+                <button id="btn-create-room" class="btn primary">Создать комнату</button>
+                <div class="divider">или</div>
+                <div class="join-group">
+                    <input type="text" id="roomCode" placeholder="Код (A1B2)" maxlength="4" style="text-transform: uppercase;" autocomplete="off">
+                    <button id="btn-join-room" class="btn secondary">Войти</button>
+                </div>
+            </div>
+
+            <!-- Экран ожидания игроков (появляется после создания/входа) -->
+            <div id="waiting-room" class="hidden">
+                <h3>Комната: <span id="display-room-code" class="highlight">----</span></h3>
+                <p class="status-text">Ожидание игроков...</p>
+                
+                <!-- Список подключившихся игроков -->
+                <ul id="players-list" class="players-list">
+                    <!-- Игроки добавляются сюда через JS -->
+                </ul>
+                
+                <!-- Кнопка старта (видна только хосту) -->
+                <button id="btn-start-game" class="btn primary hidden">Начать игру</button>
+                <p id="host-hint" class="hint hidden">Вы хост. Дождитесь игроков (мин. 4).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- ЭКРАН 2: ИГРА                              -->
+    <!-- ========================================== -->
+    <div id="screen-game" class="screen hidden">
+        <!-- Шапка с фазой, днем и ролью -->
+        <header class="game-header">
+            <div id="game-phase" class="phase-badge">Ночь</div>
+            <div id="game-day-count">День 1</div>
+            <div id="role-display" class="role-badge">Роль: ?</div>
+        </header>
+        
+        <!-- Игровое поле с карточками игроков -->
+        <div id="game-board">
+            <div id="players-grid" class="players-grid">
+                <!-- Карточки игроков генерируются через JS -->
             </div>
         </div>
 
-        <div id="waiting-room" class="hidden">
-            <h2>Комната: <span id="display-room-code"></span></h2>
-            <ul id="players-list"></ul>
-            <button id="btn-start-game" class="btn primary hidden">Начать игру (Хост)</button>
+        <!-- Нижняя панель действий (Убить, Проверить, Голосовать) -->
+        <div id="action-panel" class="action-panel">
+            <p id="action-hint">Ожидание других игроков...</p>
+            <div id="action-buttons" class="action-buttons">
+                <!-- Кнопки добавляются через JS -->
+            </div>
         </div>
     </div>
 
-    <!-- Экран 2: Сама игра -->
-    <div id="screen-game" class="screen hidden">
-        <header>
-            <span id="game-phase">Ночь</span>
-            <span id="game-timer">00:30</span>
-        </header>
-        
-        <div id="game-board">
-            <!-- Сюда JS будет выводить игроков -->
-            <div id="players-grid"></div>
-        </div>
+    <!-- ========================================== -->
+    <!-- КОНТЕЙНЕР ДЛЯ УВЕДОМЛЕНИЙ (ТОСТОВ)         -->
+    <!-- ========================================== -->
+    <div id="toast-container" class="toast-container"></div>
 
-        <div id="action-panel">
-            <!-- Кнопки действий (выбрать жертву, проголосовать) -->
-            <p id="action-hint">Выберите, кого убить</p>
-        </div>
-    </div>
-
-    <!-- Подключение скриптов -->
+    <!-- ========================================== -->
+    <!-- СКРИПТЫ                                    -->
+    <!-- ========================================== -->
+    
+    <!-- 1. Клиент Socket.io (ОБЯЗАТЕЛЬНО загружается с сервера) -->
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/socket.js"></script>
-    <script src="/js/ui.js"></script>
-    <script src="/js/lobby.js"></script>
-    <script src="/js/game.js"></script>
-    <script src="/js/main.js"></script>
+    
+    <!-- 2. Главный модуль приложения (он подтянет остальные) -->
+    <script type="module" src="/js/main.js"></script>
+    
 </body>
 </html>
